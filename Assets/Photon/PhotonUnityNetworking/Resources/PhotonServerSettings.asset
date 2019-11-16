@@ -36,5 +36,6 @@ MonoBehaviour:
   - RespawnSpaceship
   - rpc
   - rpc_s
+  - RPC_PushCharacterInitiate
   DisableAutoOpenWizard: 1
   ShowSettings: 0
