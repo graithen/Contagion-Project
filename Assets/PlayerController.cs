@@ -23,6 +23,9 @@ public class PlayerController : MonoBehaviour
     public int charNameNumber = 0;
     public TextMeshPro Alias;
 
+    //INFECTION
+    public bool Infection = false;
+    public Sprite InfectedFace;
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +34,14 @@ public class PlayerController : MonoBehaviour
 
         if (PV.IsMine)
         {
+            gameObject.name = "LocalPlayer";
             InitiateCharacter();
             //GetComponent<AudioListener>().enabled = true;
             //Instantiate(Camera, this.gameObject.transform);
+        }
+        if (!PV.IsMine)
+        {
+            gameObject.name = "Player" + gameObject.GetComponent<PhotonView>().ViewID;
         }
     }
 
@@ -42,6 +50,9 @@ public class PlayerController : MonoBehaviour
     {
         if(PV.IsMine)
             ListenForInput();
+
+        if (Infection)
+            InfectPlayer();
     }
 
     void ListenForInput()
@@ -93,21 +104,38 @@ public class PlayerController : MonoBehaviour
         Color customColor = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
         this.gameObject.GetComponent<SpriteRenderer>().color = customColor;
 
-        Alias.text = PhotonNetwork.LocalPlayer.NickName;
+        string alias = PhotonNetwork.LocalPlayer.NickName;
+        Alias.text = alias;
 
-        PV.RPC("RPC_PushCharacterInitiate", RpcTarget.AllBuffered, charPortraitNumber, charNameNumber, customColor.r, customColor.g, customColor.b);
+        PV.RPC("RPC_PushCharacterInitiate", RpcTarget.AllBuffered, charPortraitNumber, charNameNumber, alias, customColor.r, customColor.g, customColor.b);
+    }
+
+    public void InfectPlayer()
+    {
+        Debug.Log("Player infected");
+        PV.RPC("RPC_InfectPlayerSync", RpcTarget.AllBuffered, Infection);
     }
     #endregion
 
     
     #region Network Functions
     [PunRPC]
-    void RPC_PushCharacterInitiate(int portNum, int nameNum, float red, float green, float blue)
+    void RPC_PushCharacterInitiate(int portNum, int nameNum, string alias, float red, float green, float blue)
     {
         charPortrait.GetComponent<SpriteRenderer>().sprite = charPortraitArray[portNum];
         charName.text = charNameArray[nameNum];
         Color custCol = new Color(red, green, blue);
         this.gameObject.GetComponent<SpriteRenderer>().color = custCol;
+        Alias.text = alias;
+    }
+    [PunRPC]
+    void RPC_InfectPlayerSync(bool infection)
+    {
+        Debug.Log("Pushing infection state update to network");
+        Infection = infection;
+        gameObject.tag = "Infected";
+        charPortrait.GetComponent<SpriteRenderer>().sprite = InfectedFace;
+        this.gameObject.GetComponent<SpriteRenderer>().color = new Color(0, 1, 0);
     }
     #endregion
 }
