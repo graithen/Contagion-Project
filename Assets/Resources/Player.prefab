@@ -191,8 +191,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d6ff113767d5234b967c7e529d2f66e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 4
-  sprintSpeed: 7
+  movementSpeed: 7
+  sprintSpeed: 12
   charPortrait: {fileID: 1858590461342102522}
   charPortraitArray:
   - {fileID: 21300000, guid: 76421a5a696c7624d9ee235d68b022bb, type: 3}

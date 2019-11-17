@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour
 
     //INFECTION
     public bool Infection = false;
+    private bool closedToInfection;
     public Sprite InfectedFace;
 
     // Start is called before the first frame update
@@ -51,8 +52,12 @@ public class PlayerController : MonoBehaviour
         if(PV.IsMine)
             ListenForInput();
 
-        if (Infection)
+        if (Infection && !closedToInfection)
+        {
             InfectPlayer();
+            closedToInfection = true;
+        }
+
     }
 
     void ListenForInput()
@@ -77,9 +82,17 @@ public class PlayerController : MonoBehaviour
         float posY = gameObject.transform.position.y;
 
         if (!sprinting)
-            transform.position = new Vector2(posX + Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime, posY + Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime);
+        {
+            Vector2 endPos = new Vector2(posX + Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime, posY + Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime);
+            Vector2 lerpedPosition = Vector2.Lerp(transform.position, endPos, 0.75f);
+            transform.position = lerpedPosition;
+        }
         if (sprinting)
-            transform.position = new Vector2(posX + Input.GetAxis("Horizontal") * sprintSpeed * Time.deltaTime, posY + Input.GetAxis("Vertical") * sprintSpeed * Time.deltaTime);
+        {
+            Vector2 endPos = new Vector2(posX + Input.GetAxis("Horizontal") * sprintSpeed * Time.deltaTime, posY + Input.GetAxis("Vertical") * sprintSpeed * Time.deltaTime);
+            Vector2 lerpedPosition = Vector2.Lerp(transform.position, endPos, 0.75f);
+            transform.position = lerpedPosition;
+        }
     }
 
     void InitiateCharacter()
