@@ -115,9 +115,20 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Player infected");
         PV.RPC("RPC_InfectPlayerSync", RpcTarget.AllBuffered, Infection);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Infected")
+        {
+            if(PV.IsMine)
+            {
+                InfectPlayer();
+            }
+        }
+    }
     #endregion
 
-    
+
     #region Network Functions
     [PunRPC]
     void RPC_PushCharacterInitiate(int portNum, int nameNum, string alias, float red, float green, float blue)
