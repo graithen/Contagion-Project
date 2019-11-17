@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public string[] charNameArray;
     public int charNameNumber = 0;
     public TextMeshPro Alias;
+    public Camera camera;
 
     //INFECTION
     public bool Infection = false;
@@ -38,7 +39,7 @@ public class PlayerController : MonoBehaviour
             gameObject.name = "LocalPlayer";
             InitiateCharacter();
             //GetComponent<AudioListener>().enabled = true;
-            //Instantiate(Camera, this.gameObject.transform);
+            Instantiate(camera, this.gameObject.transform);
         }
         if (!PV.IsMine)
         {
@@ -83,15 +84,15 @@ public class PlayerController : MonoBehaviour
 
         if (!sprinting)
         {
-            Vector2 endPos = new Vector2(posX + Input.GetAxis("Horizontal") * movementSpeed * Time.deltaTime, posY + Input.GetAxis("Vertical") * movementSpeed * Time.deltaTime);
-            Vector2 lerpedPosition = Vector2.Lerp(transform.position, endPos, 0.75f);
-            transform.position = lerpedPosition;
+            Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            //movement = Vector2.Lerp(transform.position, movement, 0.5f);
+            this.transform.Translate(movement * movementSpeed * Time.deltaTime);
         }
         if (sprinting)
         {
-            Vector2 endPos = new Vector2(posX + Input.GetAxis("Horizontal") * sprintSpeed * Time.deltaTime, posY + Input.GetAxis("Vertical") * sprintSpeed * Time.deltaTime);
-            Vector2 lerpedPosition = Vector2.Lerp(transform.position, endPos, 0.75f);
-            transform.position = lerpedPosition;
+            Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+            //movement = Vector2.Lerp(transform.position, movement, 0.5f);
+            this.transform.Translate(movement * sprintSpeed * Time.deltaTime);
         }
     }
 
