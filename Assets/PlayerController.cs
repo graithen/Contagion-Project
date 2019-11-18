@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
 
     //CHARACTER CONTROL
     [Header("Character Control")]
+    Rigidbody2D rigid;
     public float movementSpeed = 2;
     public float sprintSpeed = 5;
     private bool sprinting;
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
         if (PV.IsMine)
         {
             gameObject.name = "LocalPlayer";
+            rigid = GetComponent<Rigidbody2D>();
             InitiateCharacter();
             //GetComponent<AudioListener>().enabled = true;
             Instantiate(camera, this.gameObject.transform);
@@ -91,14 +93,20 @@ public class PlayerController : MonoBehaviour
             if (!sprinting)
             {
                 Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                rigid.AddForce((movement * movementSpeed * Time.deltaTime) * 1000);
+
+                //Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
                 //movement = Vector2.Lerp(transform.position, movement, 0.5f);
-                this.transform.Translate(movement * movementSpeed * Time.deltaTime);
+                //this.transform.Translate(movement * movementSpeed * Time.deltaTime);
             }
             if (sprinting)
             {
                 Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                rigid.AddForce((movement * sprintSpeed * Time.deltaTime) * 1000);
+
+                //Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
                 //movement = Vector2.Lerp(transform.position, movement, 0.5f);
-                this.transform.Translate(movement * sprintSpeed * Time.deltaTime);
+                //this.transform.Translate(movement * sprintSpeed * Time.deltaTime);
             }
         }
 
@@ -107,14 +115,20 @@ public class PlayerController : MonoBehaviour
             if (!sprinting)
             {
                 Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                rigid.AddForce((movement * movementSpeed * Time.deltaTime) * 1000);
+
+                //Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
                 //movement = Vector2.Lerp(transform.position, movement, 0.5f);
-                this.transform.Translate(movement * (movementSpeed + InfectedSpeedModifier) * Time.deltaTime);
+                //this.transform.Translate(movement * (movementSpeed + InfectedSpeedModifier) * Time.deltaTime);
             }
             if (sprinting)
             {
                 Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                rigid.AddForce((movement * (sprintSpeed + InfectedSpeedModifier) * Time.deltaTime) * 1000);
+
+                //Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
                 //movement = Vector2.Lerp(transform.position, movement, 0.5f);
-                this.transform.Translate(movement * (sprintSpeed + InfectedSpeedModifier) * Time.deltaTime);
+                //this.transform.Translate(movement * (sprintSpeed + InfectedSpeedModifier) * Time.deltaTime);
             }
         }
     }
