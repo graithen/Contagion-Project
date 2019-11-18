@@ -144,7 +144,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   Group: 0
   prefixField: -1
-  Synchronization: 3
+  Synchronization: 2
   OwnershipTransfer: 0
   ObservedComponents:
   - {fileID: 1858590459780343888}
@@ -222,6 +222,7 @@ MonoBehaviour:
   Alias: {fileID: 1858590460503310421}
   camera: {fileID: 5976465366384991104, guid: d02ce541e36d2ed458e67fbd91fca90c, type: 3}
   Infection: 0
+  InfectedSpeedModifier: 2
   InfectedFace: {fileID: 21300000, guid: cba1d74daef56a145a3171d93877d8f1, type: 3}
 --- !u!114 &-2689509960675334855
 MonoBehaviour:
@@ -236,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SynchronizeVelocity: 1
-  m_SynchronizeAngularVelocity: 0
+  m_SynchronizeAngularVelocity: 1
   m_TeleportEnabled: 1
   m_TeleportIfDistanceGreaterThan: 5
 --- !u!1 &1858590460503310423
@@ -316,7 +317,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 15
 --- !u!33 &1858590460503310419
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -521,7 +522,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 15
 --- !u!33 &1858590461058974990
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -744,7 +745,7 @@ GameObject:
   - component: {fileID: 2329235235158884369}
   - component: {fileID: 478466366783967942}
   m_Layer: 0
-  m_Name: CharName (1)
+  m_Name: SubjectText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -807,7 +808,7 @@ MeshRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 15
 --- !u!33 &4668088821410816267
 MeshFilter:
   m_ObjectHideFlags: 0

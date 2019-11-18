@@ -9,12 +9,14 @@ public class PlayerController : MonoBehaviour
     private PhotonView PV;
 
     //CHARACTER CONTROL
+    [Header("Character Control")]
     public float movementSpeed = 2;
     public float sprintSpeed = 5;
     private bool sprinting;
 
 
     //CHARACTER GENERATION
+    [Header("Character Generation Settings")]
     public GameObject charPortrait; //the char portrait active on the player avatar
     public Sprite[] charPortraitArray; //the portraits stored to be randomly assigned
     public int charPortraitNumber = 0;
@@ -25,7 +27,9 @@ public class PlayerController : MonoBehaviour
     public Camera camera;
 
     //INFECTION
+    [Header("Infection Settings")]
     public bool Infection = false;
+    public int InfectedSpeedModifier = 2;
     private bool closedToInfection;
     public Sprite InfectedFace;
 
@@ -82,17 +86,36 @@ public class PlayerController : MonoBehaviour
         float posX = gameObject.transform.position.x;
         float posY = gameObject.transform.position.y;
 
-        if (!sprinting)
+        if (!Infection)
         {
-            Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
-            //movement = Vector2.Lerp(transform.position, movement, 0.5f);
-            this.transform.Translate(movement * movementSpeed * Time.deltaTime);
+            if (!sprinting)
+            {
+                Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                //movement = Vector2.Lerp(transform.position, movement, 0.5f);
+                this.transform.Translate(movement * movementSpeed * Time.deltaTime);
+            }
+            if (sprinting)
+            {
+                Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                //movement = Vector2.Lerp(transform.position, movement, 0.5f);
+                this.transform.Translate(movement * sprintSpeed * Time.deltaTime);
+            }
         }
-        if (sprinting)
+
+        if (Infection)
         {
-            Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
-            //movement = Vector2.Lerp(transform.position, movement, 0.5f);
-            this.transform.Translate(movement * sprintSpeed * Time.deltaTime);
+            if (!sprinting)
+            {
+                Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                //movement = Vector2.Lerp(transform.position, movement, 0.5f);
+                this.transform.Translate(movement * (movementSpeed + InfectedSpeedModifier) * Time.deltaTime);
+            }
+            if (sprinting)
+            {
+                Vector2 movement = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")).normalized;
+                //movement = Vector2.Lerp(transform.position, movement, 0.5f);
+                this.transform.Translate(movement * (sprintSpeed + InfectedSpeedModifier) * Time.deltaTime);
+            }
         }
     }
 
