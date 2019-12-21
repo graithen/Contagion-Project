@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         if (!PV.IsMine)
         {
             gameObject.name = "Player" + gameObject.GetComponent<PhotonView>().ViewID;
+            rigid.isKinematic = true; //remove physics control if not the local player. This should prevent physics simulations running on all clients
         }
     }
 
